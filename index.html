@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploring Flexible Relationships: Share Your Experience</title>
+    <style>
+        * { box-sizing: border-box; margin:0; padding:0; }
+        body { 
+            font-family: Arial, Helvetica, sans-serif; 
+            background:#f9f9f9; color:#333; 
+            display:flex; justify-content:center; align-items:center; min-height:100vh;
+            padding:15px;
+        }
+        .container { 
+            max-width:600px; width:100%; background:#fff; padding:35px 25px;
+            border-radius:14px; box-shadow:0 6px 25px rgba(0,0,0,.1); text-align:center;
+        }
+        h1 { font-size:23px; color:#4a90e2; margin-bottom:25px; font-weight:bold; }
+        .progress { height:6px; background:#e5e5e5; border-radius:3px; overflow:hidden; margin:18px 0; }
+        .progress-bar { height:100%; background:#4a90e2; width:0; transition:width .4s ease; }
+        .step { display:none; text-align:left; }
+        .step.active { display:block; }
+        .question { font-size:18px; margin-bottom:18px; font-weight:600; }
+        select, input[type="text"], input[type="date"] { 
+            width:100%; padding:13px; margin:10px 0; font-size:16px; 
+            border:1px solid #ddd; border-radius:7px; background:#fafafa;
+        }
+        .options label { 
+            display:block; margin:14px 0; font-size:16px; cursor:pointer; 
+            padding:8px 0; border-bottom:1px solid #eee;
+        }
+        .options label:last-child { border-bottom:none; }
+        button { 
+            background:#4a90e2; color:#fff; border:none; padding:15px 35px; 
+            font-size:17px; font-weight:bold; border-radius:7px; cursor:pointer; 
+            margin-top:25px; width:100%; transition:background .3s;
+        }
+        button:hover { background:#357abd; }
+        .disclaimer { 
+            font-size:11.5px; color:#777; line-height:1.5; margin:28px 0 15px; 
+            text-align:left; padding:0 5px;
+        }
+        #continueBtn { display:none; margin-top:30px; background:#28a745; }
+        #continueBtn:hover { background:#218838; }
+        .bonus-hint { 
+            font-size:14px; color:#e74c3c; margin:15px 0; font-weight:bold; 
+            animation:pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100% {opacity:1;} 50% {opacity:0.7;} }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Exploring Flexible Relationships: Share Your Experience</h1>
+    <div class="progress"><div class="progress-bar" id="pb"></div></div>
+
+    <!-- 1. 성별 -->
+    <div class="step active" id="s1">
+        <div class="question">성별을 선택해주세요.</div>
+        <div class="options">
+            <label><input type="radio" name="gender" value="male"> 남성</label>
+            <label><input type="radio" name="gender" value="female"> 여성</label>
+            <label><input type="radio" name="gender" value="other"> 기타</label>
+        </div>
+        <button onclick="next(1)">다음</button>
+    </div>
+
+    <!-- 2. 나이 -->
+    <div class="step" id="s2">
+        <div class="question">당신의 나이가 어떻게 되시나요?</div>
+        <select id="age">
+            <option value="">선택해주세요</option>
+            <option value="18-24">18-24세</option>
+            <option value="25-34">25-34세</option>
+            <option value="35-44">35-44세</option>
+            <option value="45-54">45-54세</option>
+            <option value="55+">55세 이상</option>
+        </select>
+        <button onclick="next(2)">다음</button>
+    </div>
+
+    <!-- 3. 생년월일 -->
+    <div class="step" id="s3">
+        <div class="question">생년월일을 입력해주세요.</div>
+        <input type="date" id="birth">
+        <button onclick="next(3)">다음</button>
+    </div>
+
+    <!-- 4. 직장 -->
+    <div class="step" id="s4">
+        <div class="question">현재 직업(직장)을 알려주세요.</div>
+        <input type="text" id="job" placeholder="예) 회사원, 학생, 프리랜서 등">
+        <button onclick="next(4)">다음</button>
+    </div>
+
+    <!-- 5. 결혼 여부 -->
+    <div class="step" id="s5">
+        <div class="question">결혼 여부를 선택해주세요.</div>
+        <div class="options">
+            <label><input type="radio" name="marry" value="single"> 미혼</label>
+            <label><input type="radio" name="marry" value="married"> 기혼</label>
+            <label><input type="radio" name="marry" value="divorced"> 이혼</label>
+            <label><input type="radio" name="marry" value="widowed"> 사별</label>
+        </div>
+        <button onclick="next(5)">다음</button>
+    </div>
+
+    <!-- 6. 의무 -->
+    <div class="step" id="s6">
+        <div class="question">현재 본인에게 가장 중요한 의무는 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="duty" value="family"> 가족</label>
+            <label><input type="radio" name="duty" value="work"> 일/커리어</label>
+            <label><input type="radio" name="duty" value="self"> 자기계발</label>
+            <label><input type="radio" name="duty" value="other"> 기타</label>
+        </div>
+        <div class="bonus-hint">마지막 단계! 보너스 기회 곧 공개됩니다!</div>
+        <button onclick="finish()">제출하기</button>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        Disclaimer: This site may contain ads and links to third-party websites, including affiliate partners, to recommend products or services. Brands and products mentioned are illustrative and may differ from the final prize. We use tracking technologies to enhance your experience, analyze traffic, and display personalized ads. By using this site, you agree to these practices and our participation in affiliate programs. Testimonials reflect individual experiences, and results may vary. External links are for convenience and informational purposes only. We do not control or endorse third-party content. © 5l9yd0fm Copyright 2025 "Powered by Surveza"
+    </div>
+
+    <!-- 최종 계속하다 버튼 -->
+    <button id="continueBtn" onclick="goToBonus()">계속하다</button>
+</div>
+
+<script>
+    const total = 6;
+    let cur = 1;
+
+    function updateProgress() {
+        document.getElementById('pb').style.width = (cur / total * 100) + '%';
+    }
+
+    function next(step) {
+        let valid = true;
+        if (step === 1 && !document.querySelector('input[name="gender"]:checked')) valid = false;
+        if (step === 2 && !document.getElementById('age').value) valid = false;
+        if (step === 3 && !document.getElementById('birth').value) valid = false;
+        if (step === 4 && !document.getElementById('job').value.trim()) valid = false;
+        if (step === 5 && !document.querySelector('input[name="marry"]:checked')) valid = false;
+        if (step === 6 && !document.querySelector('input[name="duty"]:checked')) valid = false;
+
+        if (!valid) return alert('모든 항목을 입력/선택해주세요.');
+
+        document.getElementById('s'+step).classList.remove('active');
+        cur++;
+        document.getElementById('s'+cur).classList.add('active');
+        updateProgress();
+    }
+
+    function finish() {
+        if (!document.querySelector('input[name="duty"]:checked')) return alert('의무를 선택해주세요.');
+
+        const data = {
+            gender: document.querySelector('input[name="gender"]:checked').value,
+            age: document.getElementById('age').value,
+            birth: document.getElementById('birth').value,
+            job: document.getElementById('job').value,
+            marry: document.querySelector('input[name="marry"]:checked').value,
+            duty: document.querySelector('input[name="duty"]:checked').value
+        };
+        console.log('설문 완료 →', data);
+
+        // 계속하다 버튼 표시
+        document.getElementById('continueBtn').style.display = 'block';
+    }
+
+    // 보너스 페이지로 이동 (모든 파라미터 유지)
+    function goToBonus() {
+        const targetUrl = 'https://topdealstodays.com/click.php';
+        const params = new URLSearchParams(window.location.search);
+        const finalUrl = `${targetUrl}?${params.toString()}`;
+        window.location.href = finalUrl;
+    }
+
+    // 초기 프로그레스
+    updateProgress();
+</script>
+</body>
+</html>
